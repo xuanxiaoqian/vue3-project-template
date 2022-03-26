@@ -4,7 +4,7 @@
 
 ## 介绍
 
-本项目将帮助你搭建vue3面向企业级项目开发环境，用于提升前端开发速度及效率
+本项目将帮助你搭建vue3面向企业级项目开发环境，用于提升前端开发速度及效率。
 
 
 
@@ -268,6 +268,7 @@ const whiteList = ['/', '/index', '/home', '/login', '/register']
 
 router.beforeEach((to, from, next) => {
     if (whiteList.indexOf(to.path) === -1) {
+        console.log("路由重定向，你没有该权限")
         next({ path: '/' })
     } else {
         next()
