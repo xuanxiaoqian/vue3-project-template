@@ -34,11 +34,13 @@ const router = createRouter({
 const whiteList = ['/', '/index', '/home', '/login', '/register']
 
 router.beforeEach((to, from, next) => {
-  if (whiteList.indexOf(to.path) === -1) {
-    next({ path: '/' })
-  } else {
-    next()
-  }
+  // if (whiteList.indexOf(to.path) === -1) {   // 如果有需要就打开
+  //   next({ path: '/' })
+  // } else {
+  //   next()
+  // }
+
+  next()
 })
 
 router.afterEach(() => {})
