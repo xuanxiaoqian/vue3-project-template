@@ -400,7 +400,6 @@ export class Interceptors {
 const instance = new Interceptors().getInterceptors()
 
 export default instance
-
 ~~~
 
 
@@ -408,45 +407,13 @@ export default instance
 ~~~ts
 // src/utils/http/index.ts
 
-import { AxiosPromise, AxiosResponse, AxiosRequestConfig, AxiosInstance, Method } from 'axios'
+import { AxiosInstance } from 'axios'
 
 import instance from './interceptors'
 
-export class HttpServer {
-    public axios: AxiosInstance
-
-    constructor() {
-        this.axios = instance
-    }
-
-    public request(
-    method: Extract<Method, 'get' | 'post' | 'put' | 'delete' | 'patch' | 'option' | 'head'>,
-     url: string,
-     param?: AxiosRequestConfig
-    ): AxiosPromise {
-        const config = {
-            method,
-            url,
-            ...param
-        }
-
-        return new Promise((resolve, reject) => {
-            this.axios
-                .request(config)
-                .then((res: AxiosResponse) => {
-                resolve(res)
-            })
-                .catch((err: any) => {
-                reject(err)
-            })
-        })
-    }
-}
-
-const http = new HttpServer()
+const http: AxiosInstance = instance
 
 export default http
-
 ~~~
 
 
@@ -476,9 +443,9 @@ import http from '/@/utils/http'
 import * as T from './types'
 
 const loginApi: T.LoginApi = {
-    login(params) {
-        return http.request('post', '/login', params)
-    }
+  login(params) {
+    return http.post('/login', params)
+  }
 }
 export default loginApi
 ~~~
@@ -653,4 +620,4 @@ app.mount('#app')
 
 ## X. TODO
 
-TODO: store的getters、actions.		axios的请求方法封装		router组件封装
+TODO: store的getters、actions.		router组件封装
