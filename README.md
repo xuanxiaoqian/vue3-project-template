@@ -267,12 +267,11 @@ const router = createRouter({
 const whiteList = ['/', '/index', '/home', '/login', '/register']
 
 router.beforeEach((to, from, next) => {
-    if (whiteList.indexOf(to.path) === -1) {
-        console.log("路由重定向，你没有该权限")
-        next({ path: '/' })
-    } else {
-        next()
-    }
+    // if (whiteList.indexOf(to.path) === -1) {   // 如果有需要就打开
+    //   next({ path: '/' })
+    // } else {
+    //   next()
+    // }
 })
 
 router.afterEach(() => {})
@@ -453,6 +452,20 @@ export default loginApi
 
 
 
+使用
+
+~~~ts
+import loginApi from '/@/api/login/login';
+
+loginApi.login({userName:'root',passWord:'123456'}).then(res=>{
+    console.log(res.data);
+})
+~~~
+
+
+
+
+
 
 
 ### 9. pinia状态管理
@@ -611,7 +624,52 @@ app.mount('#app')
 
 
 
+### 11. hooks代码复用
 
+`src`文件下新增`hooks`文件夹
+
+~~~ts
+// src/hooks/usePoint.ts
+
+import {reactive, onMounted, onBeforeUnmount} from 'vue'
+export  default function () {
+    //展示的数据  可以通过App.vue 界面去隐藏
+    let point = reactive({
+        x: 0,
+        y: 0
+    })
+
+    //获取鼠标点击事件
+    function savePonint(event: MouseEvent) {
+        point.x = event.pageX
+        point.y = event.pageY
+        console.log(event.pageX, event.pageY)
+    }
+
+    //现实之后调用 挂载完毕
+    onMounted(() => {
+        window.addEventListener('click', savePonint)
+    })
+
+    //在隐藏之前调用 卸载之前
+    onBeforeUnmount(() => {
+        window.removeEventListener('click', savePonint)
+    })
+
+    return point
+}
+~~~
+
+
+
+使用
+
+~~~ts
+import usePoint from '/@/hooks/usePoint'
+
+let point = usePoint()
+console.log(point);
+~~~
 
 
 
@@ -621,4 +679,154 @@ app.mount('#app')
 
 ## X. TODO
 
-TODO: store的getters、actions.		router组件封装
+`以下的内容均不在仓库中，只是为了方便有需要的人能快速使用`
+
+
+
+
+
+### Element-Plus 组件库
+
+> https://element-plus.gitee.io/zh-CN/guide/installation.html
+
+~~~sh
+npm install element-plus --save
+~~~
+
+
+
+修改入口文件`main.ts`
+
+~~~TS
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import App from './App.vue'
+
+const app = createApp(App)
+
+app.use(ElementPlus)
+app.mount('#app')
+~~~
+
+
+
+使用
+
+~~~vue
+<el-row class="mb-4">
+    <el-button type="primary">看见我没问题就成功了!!!</el-button>
+</el-row>
+~~~
+
+
+
+
+
+### VueUse hooks库
+
+> https://vueuse.org/
+
+
+
+
+
+### Nprogress 网站进度条
+
+> https://ricostacruz.com/nprogress/
+
+~~~sh
+npm install --save nprogress
+~~~
+
+
+
+~~~ts
+import Nprogress from 'nprogress';
+import "nprogress/nprogress.css";
+
+Nprogress.configure({
+    // 动画方式
+    easing: "ease",
+    // 递增进度条的速度
+    speed: 500,
+    // 是否显示加载ico
+    showSpinner: false,
+    // 自动递增间隔
+    trickleSpeed: 200,
+    // 初始化时的最小百分比
+    minimum: 0.3
+});
+
+export default Nprogress;
+~~~
+
+
+
+使用
+
+~~~ts
+import NProgress from '../utils/nprogress'
+
+NProgress.start()	// 控制开始加载
+
+NProgress.done()	// 控制结束加载
+~~~
+
+
+
+
+
+### JsCookie 本地cookie
+
+> https://www.npmjs.com/package/js-cookie
+
+~~~sh
+npm install js-cookie --save
+~~~
+
+
+
+使用
+
+~~~ts
+import Cookies from 'js-cookie'
+
+// Create a cookie, valid across the entire site:
+Cookies.set('name', 'value');
+ 
+// 创建一个从现在起7天内过期的cookie，在整个站点有效:
+Cookies.set('name', 'value', { expires: 7 });
+ 
+// Create an expiring cookie, valid to the path of the current page:
+Cookies.set('name', 'value', { expires: 7, path: '' });
+ 
+//           name       value
+Cookies.set('TokenKey', token, { expires: 1000, path: '/', domain: 'xx.com' });
+ 
+ 
+//不写过期时间，默认为1天过期
+this.$cookies.set("user_session","25j_7Sl6xDq2Kc3ym0fmrSSk2xV2XkUkX")
+ 
+this.$cookies.set("token","GH1.1.1689020474.1484362313","60s");  // 60秒后过去
+ 
+this.$cookies.set("token","GH1.1.1689020474.1484362313","30MIN");  // 30分钟后过去
+
+
+// Read cookie:
+Cookies.get('name'); // => 'value'
+Cookies.get('nothing'); // => undefined
+ 
+// Read all visible cookies:
+Cookies.get(); // => { name: 'value' }
+
+// Delete cookie:
+Cookies.remove('name');
+ 
+// Delete a cookie valid to the path of the current page:
+Cookies.set('name', 'value', { path: '' });
+Cookies.remove('name'); // fail!
+Cookies.remove('name', { path: '' }); // removed!
+
+~~~
+
