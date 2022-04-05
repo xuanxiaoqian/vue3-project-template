@@ -15,11 +15,6 @@ export class Interceptors {
     // 数据请求之前
     this.instance.interceptors.request.use(
       (config: any) => {
-        const token = window.sessionStorage.getItem('token')
-        if (token) {
-          config.headers.token = token
-        }
-
         // console.log("请求了");
         return config
       },

@@ -338,8 +338,12 @@ npm i axios
 import axios, { AxiosRequestConfig } from "axios";
 
 export const defaultConfig: AxiosRequestConfig = {
-  baseURL: import.meta.env.VITE_APP_BASE_API,
-  timeout: 1000,
+    baseURL: import.meta.env.VITE_APP_BASE_API,
+    timeout: 1000,
+    headers: {
+    token: localStorage.getItem('token') ?? '',
+        'Content-Type': 'application/json;charset=UTF-8'
+}
 };
 
 export default defaultConfig;
@@ -368,11 +372,6 @@ export class Interceptors {
         // 数据请求之前
         this.instance.interceptors.request.use(
             (config: any) => {
-                const token = window.sessionStorage.getItem('token')
-                if (token) {
-                    config.headers.token = token
-                }
-
                 // console.log("请求了");
                 return config
             },
