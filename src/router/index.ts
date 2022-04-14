@@ -1,4 +1,9 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import {
+  createRouter,
+  createWebHashHistory,
+  RouteRecordRaw,
+  useRoute as useRouteX
+} from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -46,3 +51,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {})
 
 export default router
+
+export function useRoute() {
+  return useRouteX()
+}
