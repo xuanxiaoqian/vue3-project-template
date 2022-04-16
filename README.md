@@ -224,8 +224,6 @@ interface ImportMeta {
 ### 6. css预处理器scss
 
 ~~~sh
-npm i dart-sass --dev
-
 npm i sass --dev
 ~~~
 
