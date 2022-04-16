@@ -47,6 +47,21 @@ npm i @vitejs/plugin-vue-jsx --dev
 
 
 
+vite.config.ts文件添加
+
+~~~ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import Jsx from '@vitejs/plugin-vue-jsx'
+
+export default defineConfig({
+  plugins: [vue(),Jsx()]
+})
+
+~~~
+
+
+
 
 
 ### 3. 安装prettierrc并配置
