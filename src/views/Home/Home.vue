@@ -1,5 +1,5 @@
 <template>
-  <div>你好我是主页</div>
+  <div class="home">你好我是主页</div>
 </template>
 
 <script setup lang="ts">
@@ -12,7 +12,11 @@
 import usePoint from '/@/hooks/usePoint'
 
 let point = usePoint()
-console.log(point);
+console.log(point)
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.home {
+  color: $assist-color;
+}
+</style>

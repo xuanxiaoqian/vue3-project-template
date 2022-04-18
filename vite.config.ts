@@ -23,5 +23,12 @@ export default defineConfig({
     alias: {
       '/@': resolve(__dirname, './src') //把src改为@
     }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "/@/style/variable.scss";`
+      }
+    }
   }
 })

@@ -229,6 +229,56 @@ npm i sass --dev
 
 
 
+Vite设置全局scss变量
+
+在`style`文件下新增`variable.scss`文件
+
+~~~scss
+// src/style/variable.scss
+
+$vua-pre: vua-;
+$white-color: #fff;
+$border-color: #dcdee2;
+$dash-border-color: #f0f0f0;
+$primary-color: #2d8cf0;
+$assist-color: #bae7ff;
+$disable-color: #c5c8ce;
+$text-color: #333;
+$error-color: #e44233;
+$bg-prev-color: #f5f7fa;
+
+$font-size-base: 14px;
+$font-size-mid: $font-size-base + 2;
+$font-size-large: $font-size-base + 4;
+$font-size-huge: $font-size-base + 10;
+~~~
+
+
+
+新增`vite.config.ts`文件内容
+
+~~~ts
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "/@/style/variable.scss";`
+      }
+    }
+  }
+~~~
+
+
+
+使用全局变量
+
+~~~scss
+.home {
+  color: $assist-color;
+}
+~~~
+
+
+
 
 
 ### 7. Vue-router路由
