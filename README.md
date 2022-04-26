@@ -1280,3 +1280,8 @@ Cookies.remove('name', { path: '' }); // removed!
   ],
 ~~~
 
+
+
+在vscode下CTRL+Shift+P唤出快捷命令，输入`CSSComb:Format styles`回车	(不能缺少)
+
+修改css代码保存，就可以看到css属性顺序自动改变了
