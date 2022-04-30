@@ -8,7 +8,10 @@ export default defineConfig({
   plugins: [vue(), Jsx()],
 
   server: {
+    host: '0.0.0.0',
+    port: 3000,
     open: false, //自动打开浏览器
+    https: false,
     base: './ ', //生产环境路径
     proxy: {
       '^/api': {
@@ -28,6 +31,16 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `@import "/@/style/variable.scss";`
+      }
+    }
+  },
+
+  // 生产环境去除 console debugger
+  build: {
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
       }
     }
   }
